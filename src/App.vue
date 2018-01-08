@@ -48,7 +48,7 @@
 </script>
 
 <style>
-  a {
+  header nav a {
     text-decoration: none;
   }
 

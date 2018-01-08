@@ -15,6 +15,9 @@ npm run build
 # start: serve at port 3000
 npm run start
 
-# restart: serve at port 3000
+# restart
 npm run restart
+
+# stop
+npm run stop
 ```

@@ -8,7 +8,7 @@
   import LoginBar from '../components/LoginBar.vue';
 
   export default {
-    name: 'home',
+    name: 'login',
     components: {
       LoginBar,
     },

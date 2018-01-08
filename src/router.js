@@ -4,6 +4,7 @@ import Home from './pages/Home.vue';
 import Posts from './pages/Posts.vue';
 import Explore from './pages/Explore.vue';
 import Login from './pages/Login.vue';
+import Register from './pages/Register.vue';
 
 Vue.use(Router);
 
@@ -14,5 +15,6 @@ export default new Router({
     { path: '/posts', component: Posts },
     { path: '/explore', component: Explore },
     { path: '/login', component: Login },
+    { path: '/register', component: Register },
   ],
 });
