@@ -50,6 +50,7 @@
             response.text().then((data) => {
               const responseCode = JSON.parse(data).responseCode;
               if (responseCode === '00') {
+                window.bus.$emit('login');
                 this.$router.push('/home');
               } else {
                 this.errorMsg = JSON.parse(data).responseMsg;
@@ -77,6 +78,15 @@
   .login-bar h1 {
     font-size: 1.5em;
     margin: .6em 0;
+  }
+
+  .login-bar {
+    margin: 10px;
+  }
+
+  .login-bar .el-input,
+  .login-bar .el-button.el-button--primary {
+    margin-bottom: 10px;
   }
 
   .login-bar .el-input-group__append {

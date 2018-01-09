@@ -14,6 +14,8 @@ if (!window.Promise) {
   window.Promise = Promise;
 }
 
+window.bus = new Vue();
+
 const app = new Vue({
   router,
   render: h => h(App),

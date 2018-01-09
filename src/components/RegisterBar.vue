@@ -84,6 +84,15 @@
     margin: .6em 0;
   }
 
+  .register-bar {
+    margin: 10px;
+  }
+  
+  .register-bar .el-input,
+  .register-bar .el-button.el-button--primary {
+    margin-bottom: 10px;
+  }
+
   .register-bar .el-button.el-button--primary {
     width: 100%;
   }
