@@ -85,8 +85,7 @@
                 this.msg = '恭喜您注册成功';
                 this.msgType = 'success';
                 setTimeout(() => {
-                  window.bus.$emit('login');
-                  this.$router.push('/interest');
+                  this.$router.push('/login');
                 }, 1000);
               } else {
                 this.msg = JSON.parse(data).responseMsg;

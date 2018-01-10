@@ -43,6 +43,9 @@
                 this.msg = '恭喜您选择成功';
                 this.msgType = 'success';
                 this.values = [];
+                setTimeout(() => {
+                  this.$router.push('/recommend');
+                }, 1000);
               } else {
                 this.msg = JSON.parse(data).responseMsg;
                 this.msgType = 'error';

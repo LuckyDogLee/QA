@@ -12,6 +12,9 @@
         <el-input v-model="formLabelAlign.email" :disabled="!editable"></el-input>
       </el-form-item>
     </el-form>
+    <div>
+      <el-button type="primary" @click="$router.push('/interest')" plain>设置感兴趣的领域</el-button>
+    </div>
     <el-button type="danger" @click="logout" plain>退出帐号</el-button>
   </div>
 </template>
@@ -76,5 +79,6 @@
 
   #more .el-button {
     width: 100%;
+    margin-bottom: 10px;
   }
 </style>

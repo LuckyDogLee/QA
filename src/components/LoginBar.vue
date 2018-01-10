@@ -51,7 +51,7 @@
               const responseCode = JSON.parse(data).responseCode;
               if (responseCode === '00') {
                 window.bus.$emit('login');
-                this.$router.push('/home');
+                this.$router.push('/more');
               } else {
                 this.errorMsg = JSON.parse(data).responseMsg;
               }
