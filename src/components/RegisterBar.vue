@@ -7,16 +7,20 @@
     <el-input
       placeholder="用户名"
       v-model="accountName"
-      type="email"
-      clearable
-      required>
+      type="text"
+      clearable>
     </el-input>
     <el-input
       placeholder="邮箱"
       v-model="email"
       type="email"
-      clearable
-      required>
+      clearable>
+    </el-input>
+    <el-input
+      placeholder="学号"
+      v-model="studentId"
+      type="text"
+      clearable>
     </el-input>
     <el-input
       placeholder="密码"
@@ -43,20 +47,47 @@
     data: () => ({
       accountName: '',
       email: '',
+      studentId: '',
       password: '',
       msg: '',
       msgType: '',
     }),
     methods: {
+      checkEmail(email) {
+        return /\w+[@]\w+[.]\w+/.test(email);
+      },
+      checkStudentId(studentId) {
+        return /\d{13}/.test(studentId);
+      },
       register() {
         if (this.accountName !== '' && this.email !== '' && this.password !== '') {
-          apiRegister(this.accountName, this.email, this.password).then((response) => {
+          if (!this.checkEmail(this.email)) {
+            this.msg = '邮箱格式有误';
+            this.msgType = 'error';
+            return;
+          }
+
+          if (!this.checkStudentId(this.studentId)) {
+            this.msg = '请输入13位数字学号';
+            this.msgType = 'error';
+            return;
+          }
+
+          apiRegister(
+            this.accountName,
+            this.email,
+            this.studentId,
+            this.password,
+          ).then((response) => {
             response.text().then((data) => {
               const responseCode = JSON.parse(data).responseCode;
               if (responseCode === '00') {
-                // this.$router.push('/login');
                 this.msg = '恭喜您注册成功';
                 this.msgType = 'success';
+                setTimeout(() => {
+                  window.bus.$emit('login');
+                  this.$router.push('/interest');
+                }, 1000);
               } else {
                 this.msg = JSON.parse(data).responseMsg;
                 this.msgType = 'error';

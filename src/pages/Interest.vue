@@ -1,11 +1,6 @@
 <template>
-  <div id="question">
-    <el-input
-      type="textarea"
-      autosize
-      placeholder="请输入标题"
-      v-model="title">
-    </el-input>
+  <div id="interest">
+    <p>请选择您感兴趣的领域</p>
     <el-select v-model="values" multiple placeholder="请选择标签">
       <el-option
         v-for="item in options"
@@ -14,13 +9,7 @@
         :value="item.value">
       </el-option>
     </el-select>
-    <el-input
-      type="textarea"
-      :autosize="{ minRows: 6 }"
-      placeholder="添加问题的补充说明..."
-      v-model="content">
-    </el-input>
-    <el-button type="primary" @click="question">发布问题</el-button>
+    <el-button type="primary" @click="interest">提交</el-button>
     <el-alert
       v-if="msg !== ''"
       :title="msg"
@@ -32,13 +21,11 @@
 </template>
 
 <script>
-  import { apiQueryLable, apiAddQuestion } from '../api';
+  import { apiQueryLable, apiInterestLable } from '../api';
 
   export default {
     data() {
       return {
-        title: '',
-        content: '',
         msg: '',
         msgType: '',
         options: [],
@@ -46,18 +33,16 @@
       };
     },
     methods: {
-      question() {
+      interest() {
         const labels = this.values.join(',');
-        if (this.title !== '' && this.content !== '' && labels !== '') {
-          apiAddQuestion(this.title, this.content, labels).then((response) => {
+        if (labels !== '') {
+          apiInterestLable(labels).then((response) => {
             response.text().then((data) => {
               const responseCode = JSON.parse(data).responseCode;
               if (responseCode === '00') {
-                this.msg = '恭喜您提问成功';
+                this.msg = '恭喜您选择成功';
                 this.msgType = 'success';
-                this.title = '';
                 this.values = [];
-                this.content = '';
               } else {
                 this.msg = JSON.parse(data).responseMsg;
                 this.msgType = 'error';
@@ -92,18 +77,21 @@
 </script>
 
 <style>
-  #question {
+  #interest {
     padding: 10px;
   }
 
-  #question .el-textarea,
-  #question .el-select,
-  #question .el-button.el-button--primary {
+  #interest > p {
+    text-align: center;
+  }
+
+  #interest .el-select,
+  #interest .el-button.el-button--primary {
     margin-bottom: 10px;
   }
 
-  #question .el-select,
-  #question .el-button.el-button--primary {
+  #interest .el-select,
+  #interest .el-button.el-button--primary {
     width: 100%;
   }
 

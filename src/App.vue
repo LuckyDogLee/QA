@@ -4,32 +4,34 @@
       <nav>
         <el-menu :default-active="activeIndex" mode="horizontal" :router="true">
           <el-menu-item index="/home">
-            <el-button type="text" :icon="logined ? 'el-icon-document' : ''">首页</el-button>
+            <el-button type="text" icon="el-icon-document">首页</el-button>
           </el-menu-item>
-          <el-menu-item index="/posts">
-            <el-button type="text" :icon="logined ? 'el-icon-view' : ''">帖子</el-button>
-          </el-menu-item>
-          <el-menu-item index="/explore">
-            <el-button type="text" :icon="logined ? 'el-icon-search' : ''">发现</el-button>
+          <el-menu-item index="/rank">
+            <el-button type="text" icon="el-icon-star-off">热榜</el-button>
           </el-menu-item>
           <template v-if="!logined">
             <el-menu-item index="/login">
-              <el-button type="text">登录</el-button>
+              <el-button type="text" icon="el-icon-printer">登录</el-button>
             </el-menu-item>
             <el-menu-item index="/register">
-              <el-button type="text">注册</el-button>
+              <el-button type="text" icon="el-icon-edit-outline">注册</el-button>
             </el-menu-item>
           </template>
-          <el-menu-item v-else index="/more">
-            <el-button type="text" icon="el-icon-more">更多</el-button>
-          </el-menu-item>
+          <template v-else>
+            <el-menu-item index="/recommend">
+              <el-button type="text" icon="el-icon-search">推荐</el-button>
+            </el-menu-item>
+            <el-menu-item index="/more">
+              <el-button type="text" icon="el-icon-more">更多</el-button>
+            </el-menu-item>
+          </template>
         </el-menu>
       </nav>
     </header>
     <main>
       <router-view></router-view>
     </main>
-    <footer v-if="logined && $route.path !== '/question'">
+    <footer v-if="logined && noneQuestionPaths.indexOf($route.path) === -1">
       <el-button type="primary" icon="el-icon-edit" round @click="$router.push('/question')">提问</el-button>
     </footer>
   </div>
@@ -40,11 +42,13 @@
     data() {
       return {
         logined: false,
+        authPaths: ['/question', '/recommend', '/interest', '/more'],
+        noneQuestionPaths: ['/question', '/interest', '/more'],
       };
     },
     computed: {
       activeIndex() {
-        return `${this.$route.path}`;
+        return this.$route.path;
       },
     },
     methods: {
@@ -53,6 +57,19 @@
       window.bus.$on('login', () => {
         this.logined = true;
       });
+
+      window.bus.$on('logout', () => {
+        this.logined = false;
+      });
+
+      if (this.authPaths.indexOf(this.$route.path) !== -1 && !this.logined) {
+        this.$router.push('/login');
+      }
+    },
+    updated() {
+      if (this.$route.path === '/question' && !this.logined) {
+        this.$router.push('/login');
+      }
     },
   };
 </script>
@@ -72,9 +89,25 @@
     height: 100%;
   }
 
+  #app > header,
+  #app > main,
   #app > footer {
-    width: 100%;
     position: fixed;
+    right: 0;
+    left: 0;
+  }
+
+  #app > header {
+    top: 0;
+  }
+
+  #app > main {
+    top: 61px;
+    bottom: 0;
+    overflow: auto;
+  }
+
+  #app > footer {
     bottom: 10px;
     z-index: 999;
 
