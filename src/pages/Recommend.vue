@@ -6,7 +6,9 @@
         v-for="user in users"
         @click="$router.push(`/user/${user.id}`)"
       >
-        <span class="circle"></span>
+        <span class="circle" :class="user.sex === 0 ? 'female' : 'men'">
+          {{ user.accountName.charAt(0) }}
+        </span>
         <span class="accountName">{{ user.accountName }}</span>
       </li>
     </section>
@@ -61,12 +63,16 @@
         response.text().then((data) => {
           const responseBody = JSON.parse(data);
           const users = responseBody.content;
+          const studentId = sessionStorage.getItem('studentId');
+
           users.forEach((user) => {
-            this.users.push({
-              id: user.id,
-              accountName: user.accountName,
-              sex: user.sex,
-            });
+            if (studentId !== user.studentId) {
+              this.users.push({
+                id: user.id,
+                accountName: user.accountName,
+                sex: user.sex,
+              });
+            }
           });
         });
       }, (error) => {
@@ -107,22 +113,32 @@
     display: inline-block;
     list-style: none;
     text-align: center;
-    /*width: 25%;*/
     padding: 0 5px;
   }
 
   #recommend .accountName {
     display: block;
     width: 50px;
-    overflow-x: auto;
+    height: 18px;
+    overflow: auto;
   } 
 
   .circle {
+    display: block;
     width: 50px;
     height: 50px;
-    display: block;
+    line-height: 50px;
+    text-align: center;
     border-radius: 50%;
-    border: 1px solid black;
+    color: white;
+  }
+
+  .circle.men {
+    background-color: #409eff;
+  }
+
+  .circle.female {
+    background-color: pink;
   }
 
   .question-item,

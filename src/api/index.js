@@ -17,12 +17,13 @@ export function apiLogin(account, password, captcha) {
   });
 }
 
-export function apiRegister(accountName, email, studentId, password) {
+export function apiRegister(accountName, email, studentId, password, sex) {
   const params = format({
     accountName,
     email,
     studentId,
     psw: password,
+    sex,
   });
   const url = `/api/auth/signIn?${params}`;
 

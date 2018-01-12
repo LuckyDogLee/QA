@@ -54,12 +54,19 @@
     methods: {
     },
     created() {
+      const logined = sessionStorage.getItem('logined');
+      if (logined === 'true') {
+        this.logined = true;
+      }
+
       window.bus.$on('login', () => {
         this.logined = true;
+        sessionStorage.setItem('logined', 'true');
       });
 
       window.bus.$on('logout', () => {
         this.logined = false;
+        sessionStorage.setItem('logined', 'false');
       });
 
       if (this.authPaths.indexOf(this.$route.path) !== -1 && !this.logined) {

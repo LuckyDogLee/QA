@@ -21,7 +21,7 @@
         @click="addAnswer">添加回答
       </el-button>
     </div>
-    <p v-for="answer in answers">
+    <p v-for="answer in answers" class="answer">
       <el-tag>{{ answer.consentNum }}</el-tag>
       <el-button
         type="primary"
@@ -33,8 +33,7 @@
         icon="el-icon-caret-bottom"
         @click="dislike(answer.id)"
         size="mini">反对</el-button>
-      <br />
-      <span>{{ answer.answerStr }}</span>
+      <span class="answerStr">{{ answer.answerStr }}</span>
     </p>
   </div>
 </template>
@@ -153,5 +152,18 @@
   .btn-container {
     margin: 10px 0;
     text-align: right;
+  }
+
+  .el-tag--info {
+    margin-right: 10px;
+  }
+
+  .answer > button {
+    margin-left: 10px;
+  }
+
+  .answerStr {
+    display: block;
+    margin: 10px 0;
   }
 </style>

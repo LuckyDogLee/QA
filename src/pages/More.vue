@@ -5,6 +5,9 @@
       <el-form-item label="昵称">
         <el-input v-model="formLabelAlign.accountName" :disabled="!editable"></el-input>
       </el-form-item>
+      <el-form-item label="性别">
+        <el-input v-model="formLabelAlign.sex" :disabled="!editable"></el-input>
+      </el-form-item>
       <el-form-item label="学号">
         <el-input v-model="formLabelAlign.studentId" :disabled="!editable"></el-input>
       </el-form-item>
@@ -31,6 +34,7 @@
           accountName: '',
           studentId: '',
           email: '',
+          sex: '',
         },
       };
     },
@@ -60,6 +64,8 @@
           this.formLabelAlign.accountName = myInfo.account;
           this.formLabelAlign.studentId = myInfo.studentId;
           this.formLabelAlign.email = myInfo.email;
+          this.formLabelAlign.sex = myInfo.sex === 0 ? '女' : '男';
+          sessionStorage.setItem('studentId', myInfo.studentId);
         });
       }, (error) => {
         console.log(error.message);

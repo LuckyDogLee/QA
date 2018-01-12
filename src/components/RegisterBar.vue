@@ -16,6 +16,10 @@
       type="email"
       clearable>
     </el-input>
+    <div class="sex">
+      <el-radio v-model="sex" label="1" border>男</el-radio>
+      <el-radio v-model="sex" label="0" border>女</el-radio>
+    </div>
     <el-input
       placeholder="学号"
       v-model="studentId"
@@ -51,6 +55,7 @@
       password: '',
       msg: '',
       msgType: '',
+      sex: '1',
     }),
     methods: {
       checkEmail(email) {
@@ -78,6 +83,7 @@
             this.email,
             this.studentId,
             this.password,
+            this.sex,
           ).then((response) => {
             response.text().then((data) => {
               const responseCode = JSON.parse(data).responseCode;
@@ -118,6 +124,7 @@
     margin: 10px;
   }
   
+  .sex,
   .register-bar .el-input,
   .register-bar .el-button.el-button--primary {
     margin-bottom: 10px;
@@ -125,5 +132,14 @@
 
   .register-bar .el-button.el-button--primary {
     width: 100%;
+  }
+
+  .sex {
+    display: flex;
+  }
+
+  .sex .el-radio {
+    width: 30%;
+    flex-grow: 1;
   }
 </style>

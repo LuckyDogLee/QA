@@ -9,6 +9,8 @@ import More from './pages/More.vue';
 import Question from './pages/Question.vue';
 import Interest from './pages/Interest.vue';
 import QuestionDetail from './pages/QuestionDetail.vue';
+import UserDetail from './pages/UserDetail.vue';
+
 
 Vue.use(Router);
 
@@ -25,5 +27,6 @@ export default new Router({
     { path: '/question', component: Question },
     { path: '/interest', component: Interest },
     { path: '/question/:id', component: QuestionDetail },
+    { path: '/user/:id', component: UserDetail },
   ],
 });
